@@ -34,7 +34,7 @@ const GRAVITY = 0.9; //以像素/秒为单位的加速度
 let simSpeed = 1;
 
 function getDefaultScaleFactor() {
-	if (IS_MOBILE) return 0.9;
+	if (IS_MOBILE) return 0.6;
 	if (IS_HEADER) return 0.75;
 	return 1;
 }
@@ -78,6 +78,7 @@ const mainStage = new Stage("main-canvas");
 const stages = [trailsStage, mainStage];
 
 //随机文字烟花内容
+//随机文字烟花内容
 const randomWords = [
     "新年快乐",
     "心想事成",
@@ -86,8 +87,11 @@ const randomWords = [
     "大吉大利",
     "身体健康",
     "财源广进",
-    "平安喜乐"
+    "平安喜乐",
+    "年年有余",
+    "步步高升"
 ];
+
 const wordDotsMap = {};
 randomWords.forEach((word) => {
 	wordDotsMap[word] = MyMath.literalLattice(word, 3, "Gabriola,华文琥珀", "90px");
@@ -880,9 +884,13 @@ function init() {
 }
 
 function fitShellPositionInBoundsH(position) {
-	const edge = 0.18;
-	return (1 - edge * 2) * position + edge;
+    // --- 修改开始：手机端增加左右边距 ---
+    // 电脑端边缘保留 0.18 (18%)，手机端因为屏幕窄，建议保留 0.35 (35%)，强制往中间挤
+    const edge = IS_MOBILE ? 0.35 : 0.18;
+    // --- 修改结束 ---
+    return (1 - edge * 2) * position + edge;
 }
+
 
 function fitShellPositionInBoundsV(position) {
 	return position * 0.75;
@@ -1699,20 +1707,25 @@ function createParticleArc(start, arcLength, count, randomness, particleFactory)
 
 //获取字体点阵信息
 function getWordDots(word) {
-	if (!word) return null;
-	// var res = wordDotsMap[word];
-	// if (!res) {
-	//     wordDotsMap[word] = MyMath.literalLattice(word);
-	//     res = wordDotsMap[word];
-	// }
+    if (!word) return null;
+    
+    // --- 修改开始：针对手机适配字体大小 ---
+    let fontSize;
+    if (IS_MOBILE) {
+        // 手机端：字体变小 (30px ~ 50px)
+        // 额外计算：如果词很长，强制缩小字体以适应屏幕宽度
+        const maxFontW = Math.floor((window.innerWidth * 0.85) / word.length);
+        fontSize = Math.min(Math.floor(Math.random() * 20 + 30), maxFontW);
+    } else {
+        // 电脑端：保持原样 (60px ~ 130px)
+        fontSize = Math.floor(Math.random() * 70 + 60);
+    }
+    // --- 修改结束 ---
 
-	//随机字体大小 60~130
-	var fontSize = Math.floor(Math.random() * 70 + 60);
-
-	var res = MyMath.literalLattice(word, 3, "Gabriola,华文琥珀", fontSize + "px");
-
-	return res;
+    var res = MyMath.literalLattice(word, 3, "Gabriola,华文琥珀", fontSize + "px");
+    return res;
 }
+
 
 /**
  * 用于创建球形粒子爆发的辅助对象。
