@@ -1698,22 +1698,38 @@ function createParticleArc(start, arcLength, count, randomness, particleFactory)
 function getWordDots(word) {
     if (!word) return null;
     
-    // --- 修改开始：针对手机适配字体大小 ---
+    // 我们之前添加的缓存机制，这里我们继续使用它来加速
+    const cacheKey = word + (IS_MOBILE ? "_m" : "_pc");
+    if (wordCache[cacheKey]) {
+        return wordCache[cacheKey];
+    }
+
     let fontSize;
     if (IS_MOBILE) {
-        // 手机端：字体变小 (30px ~ 50px)
-        // 额外计算：如果词很长，强制缩小字体以适应屏幕宽度
-        const maxFontW = Math.floor((window.innerWidth * 0.85) / word.length);
-        fontSize = Math.min(Math.floor(Math.random() * 20 + 30), maxFontW);
+        // --- 重点修改区域开始：提高手机端字体大小 ---
+        // 1. 提高字体基数：从 30px ~ 50px 提高到 50px ~ 80px
+        const mobileBaseMin = 50;
+        const mobileBaseMax = 30; // 50 + 30 = 80
+        
+        // 2. 重新计算最大宽度限制：为了防止长词溢出，我们仍然需要一个限制，但放宽到 95%
+        const maxFontW = Math.floor((window.innerWidth * 0.95) / word.length);
+        
+        // 3. 最终字体：在 (50~80) 和 (最大限制) 之间取最小
+        fontSize = Math.min(Math.floor(Math.random() * mobileBaseMax + mobileBaseMin), maxFontW);
+        // --- 重点修改区域结束 ---
     } else {
-        // 电脑端：保持原样 (60px ~ 130px)
+        // 电脑端：保持不变 (60px ~ 130px)
         fontSize = Math.floor(Math.random() * 70 + 60);
     }
-    // --- 修改结束 ---
 
     var res = MyMath.literalLattice(word, 3, "Gabriola,华文琥珀", fontSize + "px");
+    
+    // 存入缓存
+    wordCache[cacheKey] = res;
+
     return res;
 }
+
 
 
 /**
