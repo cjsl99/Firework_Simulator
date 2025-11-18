@@ -1698,7 +1698,7 @@ function createParticleArc(start, arcLength, count, randomness, particleFactory)
 function getWordDots(word) {
     if (!word) return null;
     
-    // 我们之前添加的缓存机制，这里我们继续使用它来加速
+    // 我们之前添加的缓存机制
     const cacheKey = word + (IS_MOBILE ? "_m" : "_pc");
     if (wordCache[cacheKey]) {
         return wordCache[cacheKey];
@@ -1706,17 +1706,17 @@ function getWordDots(word) {
 
     let fontSize;
     if (IS_MOBILE) {
-        // --- 重点修改区域开始：提高手机端字体大小 ---
-        // 1. 提高字体基数：从 30px ~ 50px 提高到 50px ~ 80px
-        const mobileBaseMin = 50;
-        const mobileBaseMax = 30; // 50 + 30 = 80
+        // --- 最终修改区域开始：进一步大幅提升手机端字体大小 ---
+        // 1. 再次提高字体基数：从 50px ~ 80px 提升到 70px ~ 120px
+        const mobileBaseMin = 70;
+        const mobileBaseMax = 50; // 70 + 50 = 120
         
-        // 2. 重新计算最大宽度限制：为了防止长词溢出，我们仍然需要一个限制，但放宽到 95%
+        // 2. 屏幕宽度限制：使用 95% 的限制，防止长词彻底溢出
         const maxFontW = Math.floor((window.innerWidth * 0.95) / word.length);
         
-        // 3. 最终字体：在 (50~80) 和 (最大限制) 之间取最小
+        // 3. 最终字体：在 (70~120) 和 (最大限制) 之间取最小
         fontSize = Math.min(Math.floor(Math.random() * mobileBaseMax + mobileBaseMin), maxFontW);
-        // --- 重点修改区域结束 ---
+        // --- 最终修改区域结束 ---
     } else {
         // 电脑端：保持不变 (60px ~ 130px)
         fontSize = Math.floor(Math.random() * 70 + 60);
