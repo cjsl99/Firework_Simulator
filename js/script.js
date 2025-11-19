@@ -1880,7 +1880,7 @@ class Shell {
 		const width = stageW;
 		const height = stageH;
 		//与屏幕两侧保持外壳的距离。
-		const hpad = 60;
+		const hpad = IS_MOBILE ? width * 0.2 : 60;
 		//与屏幕顶部的距离，以保持烟花爆裂。
 		const vpad = 50;
 		//最小爆发高度，以舞台高度的百分比表示
