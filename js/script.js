@@ -30,7 +30,7 @@ const IS_HIGH_END_DEVICE = (() => {
 // 8K -如果需要，可以对此进行限制
 const MAX_WIDTH = 7680;
 const MAX_HEIGHT = 4320;
-const GRAVITY = 0.9; //以像素/秒为单位的加速度
+const GRAVITY = 0.62; //以像素/秒为单位的加速度
 let simSpeed = 1;
 
 function getDefaultScaleFactor() {
