@@ -147,7 +147,7 @@ const store = {
 				? "3" // Desktop default
 				: IS_HEADER
 				? "1.2" //配置文件头默认值(不必是int)
-				: "2", //手机默认
+				: "1.5", //手机默认
 			wordShell: true, //文字烟花 默认为开启 若不开启可修改为false
 			autoLaunch: true, //自动发射烟花
 			finale: true, //同时放更多烟花
@@ -1699,7 +1699,7 @@ function getWordDots(word) {
 	// }
 
 	//随机字体大小 60~130
-	var fontSize = Math.floor(Math.random() * 70 + 60);
+	var fontSize = Math.floor(Math.random() * 70 + 30);
 
 	var res = MyMath.literalLattice(word, 3, "Gabriola,华文琥珀", fontSize + "px");
 
