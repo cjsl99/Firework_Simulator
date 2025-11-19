@@ -34,7 +34,7 @@ const GRAVITY = 0.9; //以像素/秒为单位的加速度
 let simSpeed = 1;
 
 function getDefaultScaleFactor() {
-	if (IS_MOBILE) return 0.9;
+	if (IS_MOBILE) return 0.62;
 	if (IS_HEADER) return 0.75;
 	return 1;
 }
@@ -1142,9 +1142,10 @@ function handlePointerStart(event) {
 
 	if (!isRunning()) return;
 
-	if (updateSpeedFromEvent(event)) {
-		isUpdatingSpeed = true;
-	} else if (event.onCanvas) {
+	//if (updateSpeedFromEvent(event)) {
+		//isUpdatingSpeed = true;
+	//} else 
+	if (event.onCanvas) {
 		launchShellFromConfig(event);
 	}
 }
