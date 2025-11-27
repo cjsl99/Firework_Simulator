@@ -2075,7 +2075,7 @@ class Shell {
 					Math.random() * 2 * Math.PI,
 					speed,
 					// add minor variation to star life
-					this.starLife + Math.random() * this.starLife * this.starLifeVariation + speed * 1000,
+					this.starLife + Math.random() * this.starLife * this.starLifeVariation + speed * 1200,
 					this.horsetail ? this.comet && this.comet.speedX : 0,
 					this.horsetail ? this.comet && this.comet.speedY : -standardInitialSpeed,
 					2
@@ -2093,12 +2093,12 @@ class Shell {
 					Math.random() * 2 * Math.PI,
 					// apply near cubic falloff to speed (places more particles towards outside)
 					Math.pow(Math.random(), 0.15) * 1.4,
-					this.starLife + Math.random() * this.starLife * this.starLifeVariation + 1000
+					this.starLife + Math.random() * this.starLife * this.starLifeVariation + 1200
 				);
 			}
 
 			//文字尾影
-			Spark.add(point.x + 5, point.y + 10, color, Math.random() * 2 * Math.PI, Math.pow(Math.random(), 0.05) * 0.4, this.starLife + Math.random() * this.starLife * this.starLifeVariation + 2000);
+			Spark.add(point.x + 5, point.y + 10, color, Math.random() * 2 * Math.PI, Math.pow(Math.random(), 0.05) * 0.4, this.starLife + Math.random() * this.starLife * this.starLifeVariation + 2400);
 		};
 
 		if (typeof this.color === "string") {
