@@ -1699,7 +1699,7 @@ function getWordDots(word) {
 	// }
 
 	//随机字体大小 60~130
-	var fontSize = Math.floor(Math.random() * 70 + 30);
+	var fontSize = Math.floor(Math.random() * 90 + 30);
 
 	var res = MyMath.literalLattice(word, 3, "Gabriola,华文琥珀", fontSize + "px");
 
